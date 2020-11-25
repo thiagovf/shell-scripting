@@ -1,0 +1,21 @@
+#!/bin/bash
+URL="https://sei.tse.jus.br/sei/processo_acesso_externo_consulta.php?id_acesso_externo=50715&infra_hash=35ba7eb5568f92527d89be8d9caa10a3"
+INTERVAL=300 #in seconds.
+LINES=120
+#getting the initial state
+HOUR=`date +%H`
+
+wget -q $URL -O beginning_state
+while [ $HOUR -ne "16" ]; do
+	echo $(date +%Y-%m-%d:%H:%M:%S)
+	wget -q $URL -O new_state
+    DIFF=$(diff -U 0 new_state beginning_state  | grep -v ^@ | wc -l)
+    if [ "$LINES" -le "$DIFF" ]
+    then
+	#changed.
+	{notify-send -i "Atualizado!!"} | cp new_state beginning_state
+    fi
+    #not changed.
+    sleep $INTERVAL's'
+done
+
