@@ -12,7 +12,7 @@ while [ $HOUR -ne "16" ]; do
     DIFF=$(diff -U 0 new_state beginning_state  | grep -v ^@ | wc -l)
     if [ "$LINES" -le "$DIFF" ]
     then
-	echo "Atualizado!!" | cp new_state beginning_state
+	zenity --info --text="Atualizado!!" | cp new_state beginning_state
     fi
     sleep $INTERVAL's'
 done
