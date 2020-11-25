@@ -7,8 +7,8 @@ HOUR=`date +%H`
 
 wget -q $URL -O beginning_state
 while [ $HOUR -ne "16" ]; do
-	echo $(date +%Y-%m-%d:%H:%M:%S)
-	wget -q $URL -O new_state
+    echo $(date +%Y-%m-%d:%H:%M:%S)
+    wget -q $URL -O new_state
     DIFF=$(diff -U 0 new_state beginning_state  | grep -v ^@ | wc -l)
     if [ "$LINES" -le "$DIFF" ]
     then
