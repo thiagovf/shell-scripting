@@ -12,10 +12,8 @@ while [ $HOUR -ne "16" ]; do
     DIFF=$(diff -U 0 new_state beginning_state  | grep -v ^@ | wc -l)
     if [ "$LINES" -le "$DIFF" ]
     then
-	#changed.
-	{notify-send -i "Atualizado!!"} | cp new_state beginning_state
+	echo "Atualizado!!" | cp new_state beginning_state
     fi
-    #not changed.
     sleep $INTERVAL's'
 done
 
